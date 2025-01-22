@@ -1,28 +1,31 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from "./components/nav/nav.component";
+import { AuthService } from './services/auth.service';
+import { HomeComponent } from "./components/home/home.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, NavComponent],
+  imports: [RouterOutlet, NgFor, NavComponent, HomeComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Corrected typo here
 })
 export class AppComponent implements OnInit{
-  title = 'DatingApp';
-  users:any;
-  constructor( private http: HttpClient){
+  private authService=inject(AuthService)
+  constructor(){
    
   }
 
   ngOnInit(): void {
-    this.http.get('https://localhost:7263/api/User').subscribe({
-      next: (response) => (this.users = response),
-      error: (error) => console.error('Error fetching users:', error),
-      complete: () => console.log('Fetch users completed'),
-    });
+    this.setCurrentUser();
   }
+  setCurrentUser(){
+    const userString=localStorage.getItem('user');
+    if(!userString) return;
+    const user=JSON.parse(userString);
+    this.authService.currentUser.set(user);
+  }
+  
 }

@@ -2,7 +2,7 @@
     <div class="container">
       <a class="navbar-brand" href="#">Meet App</a>
       
-      @if(loggedIn){
+      @if(authService.currentUser()){
         <ul class="navbar-nav me-auto mb-2 mb-md-0" >
           <li class="nav-item">
             <a class="nav-link active">Matches</a>
@@ -13,22 +13,24 @@
           <li class="nav-item">
             <a class="nav-link active">Messages</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active"(click)="logout()">Logout</a>
-          </li>
         </ul>
-      }
-      @if(loggedIn){
-        <div dropdown class="dropdown">
-            <a dropdownToggle class="dropdown-toggle text-light">Welcome user</a>
-            <div *dropdownMenu class="dropdown-menu">
-                <a class="dropdown-item">Edit profile</a>
-                <a class="dropdown-item" (click)="logout()">Logout</a>
-            </div>
-        </div>
+    }
+    @if(authService.currentUser()){
+        <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                User Settings
+            </a>
+            
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Edit </a></li>
+                <li class="dropdown-item">
+                  <a class="nav-link active"(click)="logout()">Logout</a>
+                </li>
+            </ul>
+          </div>
       }
 
-      @if(!loggedIn){
+      @if(!authService.currentUser()){
           <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off" >
             <input 
               name="username" 

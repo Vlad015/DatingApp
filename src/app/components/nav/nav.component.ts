@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import { AuthserviceService } from '../../services/authservice.service';
+import { AuthService } from '../../services/auth.service';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -11,21 +11,20 @@ import { NgIf } from '@angular/common';
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
-  private accountService=inject(AuthserviceService);
-  loggedIn=false;
+  authService=inject(AuthService);
   model:any={};
   login(){
     console.log(this.model);
-    this.accountService.login(this.model).subscribe({
+    this.authService.login(this.model).subscribe({
       next:response=>{
         console.log(response);
-        this.loggedIn=true;
       },
       error:error=>console.log(error)
     })
   }
   logout(){
     console.log("user has been logged out");
-    this.loggedIn=false;
+    this.authService.logout();
+    
   }
 }
