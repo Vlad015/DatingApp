@@ -1,19 +1,21 @@
 import { Component, inject } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { NgIf } from '@angular/common';
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [FormsModule, NgIf, RouterLink, RouterLinkActive],
+  imports: [FormsModule, NgIf, RouterLink, RouterLinkActive,TitleCasePipe],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
   authService=inject(AuthService);
-  router=inject(Router)
+   private router=inject(Router)
+   private toastr=inject(ToastrService)
   model:any={};
   login(){
     console.log(this.model);
@@ -21,7 +23,7 @@ export class NavComponent {
       next:_=>{
         void this.router.navigateByUrl('/members')
       },
-      error:error=>console.log(error)
+      error: error => this.toastr.error(error.error)
     })
   }
   logout(){

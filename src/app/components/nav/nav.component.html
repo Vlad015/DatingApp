@@ -2,23 +2,24 @@
     <div class="container">
       <a class="navbar-brand" href="#">Meet App</a>
       
-      @if(authService.currentUser()){
-        <ul class="navbar-nav me-auto mb-2 mb-md-0" >
-          <li class="nav-item">
-            <a routerLink="/members" routerLinkActive="active" class="nav-link">Matches</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/lists" routerLinkActive="active" class="nav-link">Lists</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="messages" routerLinkActive="active" class="nav-link">Messages</a>
-          </li>
-        </ul>
-    }
+      <ul class="navbar-nav me-auto mb-2 mb-md-0" >
+          @if(true){
+            <li class="nav-item">
+              <a routerLink="/members" routerLinkActive="active" class="nav-link">Matches</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/lists" routerLinkActive="active" class="nav-link">Lists</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="messages" routerLinkActive="active" class="nav-link">Messages</a>
+            </li>
+          }
+      </ul>
+    
     @if(authService.currentUser()){
         <div class="dropdown">
             <a class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                User Settings
+                {{authService.currentUser()?.username |titlecase}} Settings 
             </a>
             
             <ul class="dropdown-menu">
