@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-test-errors',
@@ -10,7 +11,7 @@ import { CheckboxControlValueAccessor } from '@angular/forms';
   styleUrl: './test-errors.component.css'
 })
 export class TestErrorsComponent {
-  baseUrl="https://localhost:7263";
+  baseUrl=environment.apiUrl;
   private http= inject(HttpClient);
   validationErrors:string[]=[];
   checkButton:boolean=false;
