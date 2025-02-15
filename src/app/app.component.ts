@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.setCurrentUser();
+    console.log('Current User:', this.authService.currentUser()?.photoUrl);
   }
   setCurrentUser(){
     const userString=localStorage.getItem('user');

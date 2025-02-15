@@ -18,9 +18,11 @@
             <a routerLink="errors" routerLinkActive="active" class="nav-link">Errors</a>
           </li>
       </ul>
+      
     
     @if(authService.currentUser()){
         <div class="dropdown">
+          <img [src]="authService.currentUser()?.photoUrl" alt="user main image">
             <a class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{authService.currentUser()?.username |titlecase}} Settings 
             </a>

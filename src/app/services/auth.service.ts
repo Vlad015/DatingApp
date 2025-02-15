@@ -10,15 +10,14 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   private http = inject(HttpClient);
   baseUrl=environment.apiUrl;
-  currentUser=signal<User| null>(null);
+  currentUser=signal<User | null>(null);
   constructor() { }
 
   login(model:any){
     return this.http.post<User>(this.baseUrl+'login',model).pipe(
       map(user=>{
         if(user){
-          localStorage.setItem('user',JSON.stringify(user));
-          this.currentUser.set(user);
+          this.setCurrentUser(user);
         }
       })
     )
@@ -27,15 +26,20 @@ export class AuthService {
     return this.http.post<User>(this.baseUrl+'register',model).pipe(
       map(user=>{
         if(user){
-          localStorage.setItem('user',JSON.stringify(user));
-          this.currentUser.set(user);
+          this.setCurrentUser(user);
         }
         return user;
       })
     )
   }
+  
   logout(){
     localStorage.removeItem('user');
     this.currentUser.set(null);
+  }
+
+  setCurrentUser(user:User){
+    localStorage.setItem('user',JSON.stringify(user));
+          this.currentUser.set(user);
   }
 }
