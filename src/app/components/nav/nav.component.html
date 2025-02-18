@@ -22,10 +22,11 @@
     
     @if(authService.currentUser()){
         <div class="dropdown">
-          <img [src]="authService.currentUser()?.photoUrl" alt="user main image">
+          <img [src]="authService.currentUser()?.photoUrl || 'assets/user.png'" alt="user main image">
             <a class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{authService.currentUser()?.username |titlecase}} Settings 
             </a>
+            <p>{{authService.currentUser()?.photoUrl}}</p>
             
             <ul class="dropdown-menu">
                 <li><a routerLink="/member/edit" class="dropdown-item" href="#">Edit profile </a></li>

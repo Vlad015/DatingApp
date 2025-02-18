@@ -18,6 +18,8 @@ export class NavComponent implements OnInit{
    private toastr=inject(ToastrService)
   model:any={};
   ngOnInit() {
+    console.log(this.authService.currentUser()?.photoUrl+" User ul curent")
+            
   }
   
   login(){

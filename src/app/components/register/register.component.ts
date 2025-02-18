@@ -1,28 +1,31 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { JsonPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { TextInputComponent } from '../../_forms/text-input/text-input.component';
 import { DatePickerComponent } from "../../_forms/date-picker/date-picker.component";
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, NgIf, TextInputComponent, DatePickerComponent],
+  imports: [ReactiveFormsModule,NgIf, TextInputComponent, DatePickerComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
   private authService=inject(AuthService);
   private fb=inject(FormBuilder)
-  private toastr=inject(ToastrService);
+  private router=inject(Router)
   cancelRegister=output<boolean>()
-  model:any={}
- registerForm:FormGroup=new FormGroup({});
+  registerForm:FormGroup=new FormGroup({});
+  maxDate=new Date();
+  validationErrors:string[] |undefined;
+
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear()-18);
   }
   initializeForm(){
     this.registerForm=this.fb.group({
@@ -47,16 +50,19 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    console.log(this.registerForm.value);
-    // this.authService.register(this.model).subscribe({
-    //   next: response=>{
-    //     console.log(response);
-    //     this.cancel();
-    //   },
-    //   error: error=>{this.toastr.error(error.error)}
-    // })
+    const dob=this.getDateOnly(this.registerForm.get('dateOfBirth')?.value);
+    this.registerForm.patchValue({dateOfBirth:dob});
+    this.authService.register(this.registerForm.value).subscribe({
+      next: response=>this.router.navigateByUrl('./members'),
+      error: error=>this.validationErrors=error
+    })
   }
   cancel(){
     this.cancelRegister.emit(false);
+  }
+
+  private getDateOnly(dob:string|undefined){
+    if(!dob)return
+    return new Date(dob).toISOString().slice(0,10);
   }
 }
