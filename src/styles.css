@@ -1,3 +1,4 @@
+@import 'node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
 .tab-panel { /* Corrected from .tab-pannel */
     border: 1px solid #ddd;
     padding: 10px;
