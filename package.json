@@ -31,6 +31,7 @@
     "ng2-file-upload": "^7.0.0",
     "ngx-bootstrap": "^19.0.2",
     "ngx-spinner": "^17.0.0",
+    "ngx-timeago": "^3.0.0",
     "ngx-toaster": "^1.0.1",
     "ngx-toastr": "^19.0.0",
     "npm": "^10.9.2",
