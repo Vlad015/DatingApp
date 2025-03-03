@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { inject, Injectable, model, signal } from '@angular/core';
+import { inject, Injectable, model, signal, WritableSignal } from '@angular/core';
 import { Member } from '../_models/member';
 import { of } from 'rxjs';
 import { Photo } from '../_models/photo';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 import { AuthService } from './auth.service';
+import { setPaginatedResponse, setPaginationHeaders } from './paginationhelper';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class MembersService {
   private http= inject(HttpClient);
   private authService=inject(AuthService);
   baseUrl='https://localhost:7263/api/';
-  paginatedResult=signal<PaginatedResult<Member[]> |null>(null)
+  paginatedResult: WritableSignal<PaginatedResult<Member[]> | null> = signal(null);
+
   memberCache=new Map();
   user=this.authService.currentUser();
   userParams = signal<UserParams>(new UserParams(this.user));
@@ -23,49 +25,31 @@ export class MembersService {
     this.userParams.set(new UserParams(this.user));
   }
   
-  getMembers(): void {
-  const cacheKey = Object.values(this.userParams()).join('-');
-  const cachedMembers = this.memberCache.get(cacheKey);
+  getMembers() {
+    const cacheKey = Object.values(this.userParams()).join('-');
+    const response = this.memberCache.get(cacheKey);
 
-  if (cachedMembers) {
-    console.log('Using cached members:', cachedMembers);
-    this.paginatedResult.set({ items: cachedMembers, pagination: this.paginatedResult()?.pagination });
-    return;
-  }
+    if (response) {
+        setPaginatedResponse(response, this.paginatedResult);
+        return;
+    }
 
-  let params = this.setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
-  params = params.append('minAge', this.userParams().minAge);
-  params = params.append('maxAge', this.userParams().maxAge);
-  params = params.append('gender', this.userParams().gender);
-  params = params.append('orderBy', this.userParams().orderBy);
+    let params = setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
+    params = params.append('minAge', this.userParams().minAge);
+    params = params.append('maxAge', this.userParams().maxAge);
+    params = params.append('gender', this.userParams().gender);
+    params = params.append('orderBy', this.userParams().orderBy);
 
-  this.http.get<Member[]>(this.baseUrl + 'User', { observe: 'response', params }).subscribe({
-    next: response => {
-      console.log('API Response:', response.body);
-      const members = response.body as Member[];
-      const pagination = JSON.parse(response.headers.get('Pagination')!);
-      this.paginatedResult.set({ items: members, pagination });
-
-      this.memberCache.set(cacheKey, members);
-    },
-    error: err => console.error('Error fetching members:', err)
-  });
+    return this.http.get<Member[]>(this.baseUrl + 'User', { observe: 'response', params }).subscribe({
+        next: response => {
+            setPaginatedResponse(response, this.paginatedResult);
+            this.memberCache.set(cacheKey, response);
+        },
+        error: err => console.error('Error fetching members:', err)
+    });
 }
 
-  private setPaginatedResponse(response:HttpResponse<Member[]>){
-    this.paginatedResult.set({
-      items:response.body as Member[],
-      pagination:JSON.parse(response.headers.get('Pagination')!)
-    })
-  }
-  private setPaginationHeaders(pageNumber:number, pageSize:number){
-    let params=new HttpParams();
-    if(pageNumber && pageSize){
-      params=params.append('pageNumber',pageNumber);
-      params=params.append('pageSize',pageSize);
-    }
-    return params;
-  }
+
 
   getMember(username: string) {
     console.log('Checking member cache:', this.memberCache);
