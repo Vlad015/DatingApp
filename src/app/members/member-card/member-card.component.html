@@ -18,7 +18,10 @@
     </div>
     <div class="card-body p-1">
         <h6 class="card-title text-center mb-1">
-            <i class="fas fa-user me-2"></i>
+            <span >
+                <i class="fas fa-user me-2" [class.is-online]="isOnline()"></i>
+            </span>
+            
                 {{member().knownAs}},{{member().age}}
                 @if(hasLiked()){
                     <i class="fa fa-heart ms-2" style="color: red;"></i>

@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MembersService } from '../../services/members.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '../../_models/member';
 import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs'
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
@@ -9,6 +9,9 @@ import { DatePipe } from '@angular/common';
 import { MemberMessagesComponent } from '../../memebers/member-messages/member-messages.component';
 import { Message } from '../../_models/message';
 import { MessageService } from '../../services/message.service.service';
+import { PresenceService } from '../../services/presence.service';
+import { AuthService } from '../../services/auth.service';
+import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 
 @Component({
   selector: 'app-member-detail',
@@ -17,15 +20,16 @@ import { MessageService } from '../../services/message.service.service';
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
-export class MemberDetailComponent implements OnInit {
+export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs',{static:true}) memberTabs?:TabsetComponent;
-  private memberService=inject(MembersService);
+  pressenceService=inject(PresenceService);
   private route=inject(ActivatedRoute);
+  private router=inject(Router);
   private messageService=inject(MessageService);
+  private authService=inject(AuthService);
   member :Member={} as Member;
   images:GalleryItem[] =[];
   activeTab?:TabDirective;
-  messages:Message[]=[];
 
   ngOnInit(): void {
 
@@ -37,12 +41,16 @@ export class MemberDetailComponent implements OnInit {
         })
       }
     })
+    this.route.paramMap.subscribe({
+      next: _=>this.onRouteParamsChange()
+    })
       this.route.queryParams.subscribe({
         next: params=>{
           params['tab']&&this.selectTab(params['tab'])
         }
       })
   }
+  
   
   selectTab(heading:string){
     if(this.memberTabs){
@@ -51,34 +59,39 @@ export class MemberDetailComponent implements OnInit {
     }
   }
   onUpdateMessages(event:Message){
-    this.messages.push(event);
+   
   }
-  onTabActivated(data: TabDirective) {
-    this.activeTab = data;
-  
-    if (this.activeTab.heading === 'Messages' && this.messages.length === 0 && this.member?.username) {
-  
-      this.messageService.getMessageThread(this.member.username).subscribe({
-        next: (messages) => {
-          this.messages = messages;
-        },
-        error: (err) => console.error('Error loading messages:', err),
-      });
+  onRouteParamsChange(){
+    const user=this.authService.currentUser();
+    if(!user) return;
+    if(this.messageService.hubConnection?.state=== HubConnectionState.Connected&& this.activeTab?.heading==='Messages'){
+      this.messageService.hubConnection.stop().then(()=>{
+        this.messageService.createHubConnection(user,this.member.username);
+      })
     }
   }
-  
 
-  // loadMember(){
-  //   const username=this.route.snapshot.paramMap.get('username');
-  //   if(!username) return;
-  //   this.memberService.getMember(username).subscribe({
-  //     next: member =>{
-  //       this.member = member
-  //       member.photos.map(p => {
-  //         this.images.push(new ImageItem({src:p.url, thumb: p.url}))
-  //       })
-  //     },
-  //     error: (err)=> console.error('Error loading member')
-  //   })
-  // }
+
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    this.router.navigate([],{
+      relativeTo:this.route,
+      queryParams:{tab:this.activeTab.heading},
+      queryParamsHandling:'merge'
+    })
+  
+    if (this.activeTab.heading === 'Messages' && this.member) {
+      const user=this.authService.currentUser();
+      if(!user)return;
+      this.messageService.createHubConnection(user,this.member.username)
+    }
+    else{
+      this.messageService.stopHubConnection();
+    }
+  }
+  ngOnDestroy(): void {
+      this.messageService.stopHubConnection();
+  }
+
+  
 }
