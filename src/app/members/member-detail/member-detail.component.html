@@ -1,11 +1,11 @@
 
     <div class="row">
         <div class="col-4">
-            <div class="card">
+            <div class="card card-settings">
                 <img 
                 src="{{member.photoUrl || './assets/user.png'}}" 
                 alt="{{member.knownAs}}" 
-                class="card-img img-thumbnail">
+                class="card-img photo">
                 <div class="card-body">
                     @if(pressenceService.onlineUsers().includes(member.username))
                     {
@@ -17,7 +17,7 @@
                         <strong>
                            Location:
                         </strong>
-                        <p>{{member.city}}, {{member.country}}</p> 
+                        <p>{{member.city}}, {{member.country}} <span><button title="Show on maps" (click)="searchOnMaps(member.city!,member.country!)" class="btn btn-outline-dark button2 ms-2" ><i class="fa fa-globe " aria-hidden="true"></i></button></span></p> 
                     </div>
                     <div>
                         <strong>
@@ -40,39 +40,56 @@
                 </div>
                 <div class="card-footer">
                     <div class="btn-group d-flex">
-                        <button class="btn btn-primary">Like</button>
-                        <button class="btn btn-success"(click)="selectTab('Messages')">Message</button>
+                        <button class="btn btn-outline-primary">Like</button>
+                        <button class="btn btn-outline-info"(click)="selectTab('Messages')">Message</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-8">
             <tabset class="member-tabset" #memberTabs>
-                <tab heading="About {{member.knownAs}}" (selectTab)="onTabActivated($event)">
-                    <h4>Description</h4>
-                    <p>{{member.introduction}}</p>
-                    <h4>Looking for</h4>
-                    <p>{{member.lookingFor}}</p>
-                </tab>
-                <tab heading="Interests" (selectTab)="onTabActivated($event)">
-                    <h4>Interests</h4>
-                    <p>{{member.interests}}</p>
-                </tab>
-                <tab heading="Photos" #photoTab="tab" (selectTab)="onTabActivated($event)" >
-                    @if(photoTab.active){
-
+                <tab>
+                    <ng-template tabHeading>
+                      About {{ member.knownAs }} <i class="fa-solid fa-address-card"></i>
+                    </ng-template>
+                  
+                    <h4 class="fs-2 text-white">Description</h4>
+                    <p class="fs-4" style="color: gray;">{{ member.introduction }}</p>
+                  
+                    <h4 class="fs-2 text-white">Looking for</h4>
+                    <p class="fs-4" style="color: gray;">{{ member.lookingFor }}</p>
+                  </tab>
+                  <tab>
+                    <ng-template tabHeading>
+                        Interests  <i class="fa-solid fa-thumbtack"></i>
+                    </ng-template>
+                    <h4 class="fs-1 text-white">Interests</h4>
+                    <p class="fs-4 " style="color: gray;">{{member.interests}}</p>
+                  
+                  </tab>
+                  <tab (selectTab)="onTabActivated($event)">
+                    <ng-template tabHeading>
+                      Photos <i class="fa-solid fa-images"></i>
+                    </ng-template>
+                  
+                    @if (activeTab?.active) {
                         <gallery 
-                        [items]="images" 
-                        [itemAutosize]="true"
-                        class=" gallery">
-                    </gallery>
-                    }
-                </tab>
-                <tab heading="Messages" (selectTab)="onTabActivated($event)">
-                    <app-member-messages 
-                     [username]="member.username"
-                     ></app-member-messages>
-                </tab>
+                          [items]="images" 
+                          [itemAutosize]="true"
+                          class="gallery">
+                        </gallery>
+                      }
+                  </tab>
+                  
+                
+                  <tab heading="Messages" (selectTab)="onTabActivated($event)">
+                    <ng-template tabHeading>
+                       <i class="fa-solid fa-message"></i>
+                    </ng-template>
+                  
+                    <app-member-messages [username]="member.username"></app-member-messages>
+                  </tab>
+                
             </tabset>
 
         </div>

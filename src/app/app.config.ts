@@ -12,6 +12,7 @@ import { loadingInterceptor } from './_interceptors/loading.interceptor';
 import { TimeagoModule } from 'ngx-timeago';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),

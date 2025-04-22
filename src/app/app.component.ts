@@ -10,13 +10,14 @@ import { PresenceService } from './services/presence.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavComponent, NgxSpinnerComponent],
+  imports: [RouterOutlet, NavComponent, NgxSpinnerComponent,CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Corrected typo here
 })
 export class AppComponent implements OnInit{
   private authService=inject(AuthService);
   private presenceService=inject(PresenceService);
+  backgroundUrl = 'url(assets/images/bg.avif)'
   constructor(){
    
   }
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit{
     this.setCurrentUser();
     console.log('Current User:', this.authService.currentUser()?.photoUrl);
     const user = this.authService.currentUser();
+    
   if (user) {
     this.presenceService.createHubConnection(user);
   }

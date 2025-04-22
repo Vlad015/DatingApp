@@ -1,0 +1,52 @@
+h2{
+color: white;
+}
+span{
+    color:gray;
+}
+.border-down{
+    border-bottom: 3px solid rgba(50, 93, 136);
+    margin: auto;
+    max-width: 40%;
+}
+.container{
+    display: flex;
+    padding: 15px,15px,15px,15px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.transparent-select {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px;
+    position: relative;
+  }
+  
+  .transparent-select:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: rgba(50, 93, 136);
+  }
+  
+  .transparent-select option {
+    background-color: black;
+    color: white;
+  }
+button {
+    color: white;
+    border: 2px solid white;
+    border-radius: 50px;
+    height: 50px;
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    color: rgba(50, 93, 136, 1);
+    border-color: rgba(50, 93, 136, 1);
+    transform: scale(0.95); 
+  }

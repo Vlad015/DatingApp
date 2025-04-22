@@ -2,12 +2,12 @@
     <h2 class="text-center text-primary">SignUp</h2>
     <hr>
 
-    <div class="mb-3">
-        <label style="margin-right: 10px">I am a: </label>
-        <label class="form-check-label">
-            <input type="radio" class="form-check-input" value="male" formControlName="gender">Male
+    <div class="form-check form-check-inline mb-3 text-white">
+        <label style="margin-right: 10px ">I am a: </label>
+        <label class="form-check-label me-4">
+            <input type="radio" class="form-check-input " value="male" formControlName="gender">Male
         </label>
-        <label class="form-check-label">
+        <label class="form-check-label ">
             <input type="radio" class="form-check-input" value="female" formControlName="gender">Female
         </label>
     </div>
@@ -33,11 +33,30 @@
     [label]="'City'"   
     ></app-text-input>
 
-    <app-text-input
-    [formControl]="$any(registerForm.controls['country'])"
-    [label]="'Country'"   
-    ></app-text-input>
-
+    <div class="mb-3 form-floating">
+        <input
+          id="countryInput"
+          list="datalistOptions"
+          class="form-control bg-transparent text-white border-white transparent-input"
+          placeholder="Type to search..."
+          formControlName="country"
+          [class.is-invalid]="registerForm.controls['country'].touched && registerForm.controls['country'].invalid"
+        >
+        <datalist id="datalistOptions">
+          @for (country of countries; track $index) {
+            <option [value]="country"></option>
+          }
+        </datalist>
+      
+        <div *ngIf="registerForm.controls['country'].touched && registerForm.controls['country'].invalid" class="invalid-feedback text-start d-block">
+          <div *ngIf="registerForm.controls['country'].hasError('required')">
+            Country is required.
+          </div>
+          <!-- Add more custom error messages here if needed -->
+        </div>
+      </div>
+      
+      
     <app-text-input
         [formControl]="$any(registerForm.controls['password'])"
         [label]="'Password'" 
@@ -57,8 +76,8 @@
         </div>
     }
 
-    <div class="form-group text-center">
-        <button [disabled]="!registerForm.valid" class="btn btn-success me-2" type="submit">Register</button>
-        <button class="btn btn-success me-2" (click)="cancel()" type="button">Cancel</button>
+    <div class="form-group text-center mb-5">
+        <button [disabled]="!registerForm.valid" class="btn btn-outline-info button1" type="submit">Register</button>
+        <button class="btn btn-info button1 me-2" (click)="cancel()" type="button">Cancel</button>
     </div>
 </form>

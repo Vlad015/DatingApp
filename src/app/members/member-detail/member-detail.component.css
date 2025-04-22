@@ -14,3 +14,50 @@
     border-top: none;
 
 }
+.photo{
+    width: 90%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.button2{
+    border: none;
+}
+.button2:hover{
+    color: rgba(50, 93, 136,1);
+    transition: size 0.1;
+    background-color: transparent;
+    transition: all 0.1s ease-in-out;
+    transform: scale(1.1);
+}
+.card-settings{
+    box-shadow: 0 2px 6px white;
+}
+.tabset-settings .nav-tabs {
+    border-bottom: none !important;
+    background-color: transparent !important;
+  }
+  .tabset-settings .nav-tabs .nav-link {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    margin-right: 10px;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .tabset-settings .nav-tabs .nav-link:hover {
+    color: #5700ef !important;
+    border-bottom: 2px solid #5700ef;
+  }
+  .tabset-settings .nav-tabs .nav-link.active {
+    color: #5700ef !important;
+    font-weight: bold;
+    border-bottom: 2px solid #5700ef;
+  }
+  
+  .tabset-settings .tab-content {
+    background-color: transparent !important;
+    padding: 20px 0;
+  }

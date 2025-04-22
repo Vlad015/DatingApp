@@ -6,3 +6,57 @@ img{
     border: 2px solid;
     display: inline;
 }
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+  .navbar {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  .navbar-nav {
+    margin-top: 0 !important;
+  }
+  .container{
+    font-family: sans-serif;
+  }
+  .nav-link{
+    text-transform: none;
+    font-size: 20px;
+    color: #f9f9f9;;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    font-family: sans-serif;
+    text-shadow: 1px 1px 2px rgba(249, 249, 249, 0.3);
+  }
+  .navbar-brand{
+    font-size: 25px;
+  }
+  
+  .nav-link:hover,
+  .nav-link.active {
+    color: grey;
+    transition: border-bottom 0.3s ease;
+    
+  }
+  
+  .nav-link:hover,
+  .active {
+    border-bottom: 3px solid rgba(50, 93, 136, 0.8);
+    color: grey;
+  }
+  .custom-navbar {
+    background-color: transparent;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  .custom-navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.4); /* semi-transparent dark */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  

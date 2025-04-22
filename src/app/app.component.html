@@ -1,10 +1,9 @@
+<div class="app-background-wrapper">
+  <app-nav></app-nav>
 
-<ngx-spinner type="ball-triangle-path">
-    <h3>Loading...</h3>
-</ngx-spinner>
-
-<app-nav></app-nav>
-<div class="container" style="margin-top: 100px;">
-    <router-outlet></router-outlet>
-    
+  <div [ngStyle]="{'background-image': backgroundUrl}" class="app-background">
+    <div class="main-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

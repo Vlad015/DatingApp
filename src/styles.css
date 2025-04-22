@@ -1,6 +1,22 @@
 
+.app-background {
+  min-height: 100vh;
+  background-image: url('assets/images/bg.jpg'); /* optional fallback */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed; /* for desktop parallax effect */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.app-background-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-.tab-panel { /* Corrected from .tab-pannel */
+.tab-panel { 
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 4px;
@@ -41,9 +57,60 @@
 
 .member-tabset > .tab-content {
     margin-top: -3px;
-    background-color: #fff;
     border: 0;
     border-top: 1px solid #eee;
     padding: 15px 0;
 }
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  
+  
+  
+  .transparent-input {
+    background-color: transparent !important;
+    border: 1px solid white !important;
+    color: white !important;
+  }
+  
 
+  .transparent-input::placeholder {
+    color: white !important;
+    opacity: 1 !important;
+  }
+  
+ 
+  .transparent-input.ng-invalid.ng-touched {
+    border-color: red !important;
+    color: red !important;
+  }
+  
+  .transparent-input.ng-invalid.ng-touched::placeholder {
+    color: rgba(255, 0, 0, 0.6) !important;
+  }
+  
+  
+  .body{
+    font-family: sans-serif;
+    background-repeat: no-repeat!important;
+    background-attachment: fixed !important;
+  }
+  button
+  {
+    text-transform: none !important;
+    font-size: 20px !important;
+  }
+
+  

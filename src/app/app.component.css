@@ -1,0 +1,12 @@
+.app-background {
+    background-image: image-set(
+      url('/assets/images/bg.jpg') type("image/jpeg")
+    );
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  }
+  .main-wrapper {
+    text-align: center;
+    padding-top: 100px;
+  }

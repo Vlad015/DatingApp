@@ -12,6 +12,7 @@ import { MessageService } from '../../services/message.service.service';
 import { PresenceService } from '../../services/presence.service';
 import { AuthService } from '../../services/auth.service';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
+import { ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-member-detail',
@@ -27,6 +28,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   private router=inject(Router);
   private messageService=inject(MessageService);
   private authService=inject(AuthService);
+  
   member :Member={} as Member;
   images:GalleryItem[] =[];
   activeTab?:TabDirective;
@@ -89,9 +91,22 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       this.messageService.stopHubConnection();
     }
   }
+
+  searchOnMaps(city?: string, country?: string): void {
+    if (!city || !country) {
+      console.warn('City or country is missing!');
+      return;
+    }
+  
+    const query = encodeURIComponent(`${city}, ${country}`);
+    const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
+    window.open(url, '_blank');
+  }
+
   ngOnDestroy(): void {
       this.messageService.stopHubConnection();
   }
+  
 
   
 }

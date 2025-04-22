@@ -5,11 +5,11 @@
         }
         @else {
             <ul class="chat">
-                @for(message of messageService.messageThread(); track message.id){
+                @for(message of messages; track message.id){
                     <li>
                         <div>
                             <span class="chat-img "
-                            [ngClass]="{'float-end': message.senderUsername === username(), 'float-start': message.senderUsername !== username()}">
+                            [ngClass]="{'float-end': message.senderUsername === usernameValue, 'float-start': message.senderUsername !== usernameValue}">
                                 <img 
                                 class="rounded-circle" 
                                 src="{{message.senderPhotoUrl || './assets/user.png'}}" 
@@ -19,11 +19,11 @@
                                 <div class="header">
                                     <small class="text-muted">
                                         <span class="fa fa-clock-o">({{isReadNow(message.messageSent)?'now' :((message.messageSent| timeago))}})</span>
-                                        @if(!message.dateRead&& message.senderUsername !==username()){
+                                        @if(!message.dateRead&& message.senderUsername !==usernameValue){
                                             
                                             <span class="text-danger">(Unread)</span>
                                         }
-                                        @if(message.dateRead && message.senderUsername !== username()){
+                                        @if(message.dateRead && message.senderUsername !== usernameValue){
                                             <span class="text-success">
                                                 ({{isReadNow(message.dateRead)?'read now' :('read'+ (message.dateRead| timeago))}})</span>
                                         }

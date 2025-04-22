@@ -1,0 +1,17 @@
+.dimmed{
+    opacity: 0.6!important;
+    font-size: 43px;
+}
+.body{
+    font-family: sans-serif;
+}
+button{
+    border-radius: 100px;
+    opacity: 0.9;
+    border: 2px solid;
+    font-family: sans-serif;
+    
+}
+p{
+    font-size:25px
+}
