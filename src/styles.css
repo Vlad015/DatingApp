@@ -112,5 +112,38 @@ html {
     text-transform: none !important;
     font-size: 20px !important;
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .pagination li {
+    display: inline-block;
+  }
+  
+  .pagination li a,
+  .pagination li span {
+    background-color: #111;
+    color: white;
+    border: 1px solid #5700ef;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .pagination li.active a {
+    background-color: #5700ef;
+    color: white;
+    border-color: #5700ef;
+  }
+  
+  .pagination li a:hover {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  
 
   
