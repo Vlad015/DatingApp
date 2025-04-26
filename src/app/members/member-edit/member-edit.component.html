@@ -1,7 +1,7 @@
 @if(member){
 <div class="row">
   <div class="col-4">
-    <h1>Your profile</h1>
+    <h1 class="text-white">Your profile</h1>
   </div>
   <div class="col-8">
     @if(editForm.dirty){
@@ -56,41 +56,41 @@
     <tabset class="member-tabset">
       <tab heading="About {{ member.knownAs }}">
         <form id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()">
-          <h4 class="mt-2">Description</h4>
+          <h4 class="mt-2 text-white">Description</h4>
           <textarea
-            class="form-control"
+            class="form-control bg-transparent text-white fs-5"
             name="introduction"
             [(ngModel)]="member.introduction"
             rows="6"
           ></textarea>
-          <h4 class="mt-2">Looking for</h4>
+          <h4 class="mt-2 text-white">Looking for</h4>
           <textarea
-            class="form-control"
+            class="form-control bg-transparent text-white fs-5"
             name="lookingFor"
             [(ngModel)]="member.lookingFor"
             rows="6"
           ></textarea>
-          <h4 class="mt-2">Interests</h4>
+          <h4 class="mt-2 text-white">Interests</h4>
           <textarea
-            class="form-control"
+            class="form-control bg-transparent text-white fs-5"
             name="interests"
             [(ngModel)]="member.interests"
             rows="6"
           ></textarea>
-          <h4 class="mt-4">Location Details</h4>
+          <h4 class="mt-4 text-white">Location Details</h4>
           <div class="d-flex align-items-center">
             <label>City</label>
             <input
               type="text"
               [(ngModel)]="member.city"
-              class="form-control mx-2"
+              class="form-control bg-transparent text-white fs-5 mx-2"
               name="city"
             />
             <label>Country</label>
             <input
               type="text"
               [(ngModel)]="member.country"
-              class="form-control mx-2"
+              class="form-control bg-transparent text-white fs-5 mx-2"
               name="country"
             />
           </div>

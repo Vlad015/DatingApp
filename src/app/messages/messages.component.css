@@ -1,4 +1,12 @@
-.rouded-circle{
+.rounded-circle{
     max-height: 50px;
     border-radius: 50%;
 }
+.styled-table {
+    width: 80%;
+    margin: auto;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* for rounded corners */
+  }
+  

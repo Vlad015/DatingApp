@@ -13,30 +13,22 @@
                             <i class="fa fa-user-circle text-success"></i>Online now
                         </div>
                     }
-                    <div>
-                        <strong>
+                        <strong >
                            Location:
                         </strong>
                         <p>{{member.city}}, {{member.country}} <span><button title="Show on maps" (click)="searchOnMaps(member.city!,member.country!)" class="btn btn-outline-dark button2 ms-2" ><i class="fa fa-globe " aria-hidden="true"></i></button></span></p> 
-                    </div>
-                    <div>
                         <strong>
                            Age:
                         </strong>
                         <p>{{member.age}}</p> 
-                    </div>
-                    <div>
                         <strong>
                            Last Active:
                         </strong>
                         <p>{{member.lastActive| timeago}}</p> 
-                    </div>
-                    <div>
                         <strong>
                            Member since:
                         </strong>
                         <p>{{member.created | date:'dd MMM yyyy'}}</p> 
-                    </div>
                 </div>
             </div>
         </div>
