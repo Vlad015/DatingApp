@@ -50,6 +50,18 @@ export class AuthService {
     this.currentUser.set(null);
     this.presenceService.stopHubConnection();
   }
+  forgotPassword(email:string){
+    return this.http.post(this.baseUrl+'forgot-password',{email})
+  }
+
+  resetPassword(email:string, token:string, newPassword:string){
+    return this.http.post<{ message: string }>(this.baseUrl+'reset-password',{
+      email,
+      token,
+      newPassword
+    }
+    );
+  }
 
   setCurrentUser(user:User){
     localStorage.setItem('user',JSON.stringify(user));

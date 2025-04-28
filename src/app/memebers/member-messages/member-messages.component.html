@@ -10,7 +10,7 @@
                 <ul class="chat list-unstyled">
 
                     @for (group of groupMessagesByDay(messageService.messageThread()); track group.date) {
-                      <!-- Group Header -->
+                      
                       <li>
                         <h6 class="text-center text-muted mt-3 mb-2">
                           {{ group.date }}
@@ -21,7 +21,7 @@
                         <li [ngClass]="{ 'justify-content-end': message.senderUsername === usernameValue, 'justify-content-start': message.senderUsername !== usernameValue }" 
                             class="d-flex mb-2">
                   
-                          <!-- Show avatar only for messages from others -->
+                          
                           @if (message.senderUsername !== usernameValue) {
                             <img 
                               class="rounded-circle me-2"
@@ -30,7 +30,7 @@
                               style="width: 40px; height: 40px;" />
                           }
                   
-                          <!-- Message bubble -->
+                          
                           <div [ngClass]="{ 'sent-message': message.senderUsername === usernameValue, 'received-message': message.senderUsername !== usernameValue }"
                                class="message-bubble d-flex align-items-end">
                   

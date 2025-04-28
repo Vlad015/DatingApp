@@ -15,3 +15,14 @@ button{
 p{
     font-size:25px
 }
+.forgot-password{
+    border-top: 0.5px solid white !important;
+    margin-top: 30px !important;
+    padding-top: 15px;
+    width: 50%;
+    margin: auto;
+}
+
+.forgot-password:hover{
+    color: white!important;
+}

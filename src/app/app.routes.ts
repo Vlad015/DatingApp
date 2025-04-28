@@ -13,6 +13,8 @@ import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './Admin/admin-panel/admin-panel.component';
 import { adminGuard } from './_guards/admin.guard';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { NewPasswordComponent } from './components/new-password/new-password.component';
 
 export const routes: Routes = [
     {path:'', component:HomeComponent},
@@ -31,6 +33,8 @@ export const routes: Routes = [
             {path:'admin', component:AdminPanelComponent, canActivate:[adminGuard]}
         ]
     },
+    {path:'reset-password', component:NewPasswordComponent},
+    {path:'forgot-password', component:ForgotPasswordComponent},
     {path:'errors', component:TestErrorsComponent},
     {path:'not-found', component:NotFoundComponent},
     {path:'server-error', component:ServerErrorComponent},
